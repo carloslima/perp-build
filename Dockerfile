@@ -16,4 +16,5 @@ RUN yum install -y which rpm-build rpmdevtools \
         && rpm -i checkinstall-*.rpm \
         && rpmdev-setuptree
 RUN cd /root/perp-2.07 && checkinstall -R -y --install=no --showinstall
-CMD cp /root/rpmbuild/RPMS/x86_64/perp-*.rpm /root/build
+ADD installer /installer
+CMD /installer
