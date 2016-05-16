@@ -11,10 +11,11 @@ RUN cd /root && curl http://b0llix.net/perp/distfiles/perp-2.07.tar.gz | tar -zx
 ADD conf.mk /root/perp-2.07/conf.mk
 RUN cd /root/perp-2.07 && make && make strip
 
-RUN yum install -y which rpm-build rpmdevtools \
-        && wget ftp://ftp.pbone.net/mirror/ftp5.gwdg.de/pub/opensuse/repositories/home:/ikoinoba/CentOS_CentOS-6/x86_64/checkinstall-1.6.2-3.el6.1.x86_64.rpm \
+RUN yum install -y which rpm-build rpmdevtools; \
+        wget http://ftp5.gwdg.de/pub/opensuse/repositories/home:/andnagy/RedHat_RHEL-6/x86_64/checkinstall-1.6.2-20.4.x86_64.rpm \
+        && sha256sum checkinstall-*.rpm \
         && rpm -i checkinstall-*.rpm \
         && rpmdev-setuptree
-RUN cd /root/perp-2.07 && checkinstall -R -y --install=no --showinstall
+RUN cd /root/perp-2.07 && checkinstall -R -y --install=no --showinstall --pkgrelease=2
 ADD installer /installer
 CMD /installer
